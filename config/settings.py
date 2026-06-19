@@ -151,6 +151,7 @@ else:
     CORS_ALLOWED_ORIGINS = [
         'http://localhost:5173',
         'http://127.0.0.1:5173',
+        'https://rahaf-alzabni.github.io',
     ]
 CORS_ALLOW_CREDENTIALS = True
 
@@ -161,6 +162,7 @@ else:
     CSRF_TRUSTED_ORIGINS = [
         'http://localhost:5173',
         'http://127.0.0.1:5173',
+        'https://rahaf-alzabni.github.io',
     ]
 if _render_host:
     CSRF_TRUSTED_ORIGINS.append(f'https://{_render_host}')
