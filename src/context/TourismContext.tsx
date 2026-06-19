@@ -42,6 +42,10 @@ interface TourismContextValue {
 
 const TourismContext = createContext<TourismContextValue | null>(null);
 
+function isGitHubPagesHost(): boolean {
+  return typeof window !== 'undefined' && window.location.hostname.endsWith('github.io');
+}
+
 export function TourismProvider({ children, lang }: { children: ReactNode; lang?: string }) {
   const [attractions, setAttractions] = useState<UIAttraction[]>([]);
   const [events, setEvents] = useState<UIEvent[]>([]);
@@ -66,6 +70,13 @@ export function TourismProvider({ children, lang }: { children: ReactNode; lang?
   const loadData = useCallback(async () => {
     setLoading(true);
     setError(null);
+
+    if (isGitHubPagesHost()) {
+      applyDemo();
+      setLoading(false);
+      return;
+    }
+
     try {
       const [placesData, eventsData, routesData, reviewsData] = await Promise.all([
         getPlaces(),
@@ -92,6 +103,12 @@ export function TourismProvider({ children, lang }: { children: ReactNode; lang?
   }, [ar, applyDemo]);
 
   useEffect(() => {
+    if (isGitHubPagesHost()) {
+      applyDemo();
+      setLoading(false);
+      return;
+    }
+
     initCsrf()
       .then(() => getMe())
       .then((me) => {
@@ -101,7 +118,7 @@ export function TourismProvider({ children, lang }: { children: ReactNode; lang?
       })
       .catch(() => undefined)
       .finally(() => loadData());
-  }, [loadData]);
+  }, [loadData, applyDemo]);
 
   const login = useCallback(async (username: string, password: string) => {
     const me = await apiLogin(username, password);

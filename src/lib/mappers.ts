@@ -93,11 +93,11 @@ export interface UIReview {
 }
 
 function placeImage(place: TouristPlace): string {
+  const bundled = HAIL_PLACE_IMAGES[place.name_en];
+  if (bundled) return bundled;
   const resolved = resolveMediaUrl(place.image);
   if (resolved) return resolved;
-  return HAIL_PLACE_IMAGES[place.name_en]
-    || PLACEHOLDER_IMAGES[place.category]
-    || PLACEHOLDER_IMAGES.default;
+  return PLACEHOLDER_IMAGES[place.category] || PLACEHOLDER_IMAGES.default;
 }
 
 function formatCoords(lat: number, lng: number, ar: boolean): string {
@@ -168,7 +168,7 @@ export function mapEvent(event: Event, index: number): UIEvent {
     color: EVENT_COLORS[index % EVENT_COLORS.length],
     descriptionEn: event.description,
     descriptionAr: event.description_ar || event.description,
-    image: resolveMediaUrl(event.image) || HAIL_EVENT_IMAGES[event.title_en] || PLACEHOLDER_IMAGES.cultural,
+    image: HAIL_EVENT_IMAGES[event.title_en] || resolveMediaUrl(event.image) || PLACEHOLDER_IMAGES.cultural,
   };
 }
 
