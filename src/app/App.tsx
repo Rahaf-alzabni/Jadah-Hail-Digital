@@ -64,8 +64,8 @@ function adminTooltipStyle(ar: boolean) {
 }
 
 function DataStatus({ ar }: { ar: boolean }) {
-  const { loading, error, refresh } = useTourism();
-  if (loading) {
+  const { loading, error, refresh, attractions, demoMode } = useTourism();
+  if (loading && !attractions.length) {
     return (
       <div className="flex items-center justify-center gap-2 py-16 text-[#7A6B55]">
         <Loader2 size={20} className="animate-spin text-[#C4912A]" />
@@ -75,15 +75,26 @@ function DataStatus({ ar }: { ar: boolean }) {
       </div>
     );
   }
-  if (error) {
+  if (error && !attractions.length) {
     return (
       <div className="mx-6 my-8 p-6 bg-red-50 border border-red-200 rounded-2xl text-center">
         <p className="text-red-700 text-sm mb-3" style={{ fontFamily: ar ? "'Noto Naskh Arabic'" : "'Inter'" }}>
-          {ar ? "تعذّر الاتصال بالخادم. تأكد من تشغيل Django." : `Could not connect to API: ${error}`}
+          {ar ? "تعذّر الاتصال بالخادم. جاري عرض البيانات التجريبية..." : `Could not connect to API: ${error}`}
         </p>
         <button onClick={() => refresh()} className="text-sm font-semibold text-[#C4912A] hover:underline">
           {ar ? "إعادة المحاولة" : "Retry"}
         </button>
+      </div>
+    );
+  }
+  if (demoMode) {
+    return (
+      <div className="mx-6 mt-4 p-3 bg-amber-50 border border-amber-200 rounded-xl text-center">
+        <p className="text-amber-900 text-xs" style={{ fontFamily: ar ? "'Noto Naskh Arabic'" : "'Inter'" }}>
+          {ar
+            ? "وضع العرض التجريبي — المعالم والصور متاحة. لتسجيل الدخول والتقييمات شغّلي Django محلياً أو انشري الخادم على Render."
+            : "Demo mode — attractions and images are shown. Start Django locally or deploy the API on Render for login and reviews."}
+        </p>
       </div>
     );
   }
@@ -125,7 +136,7 @@ function HeroSection({ lang, setPage, placeCount }: { lang: string; setPage: (p:
       {/* Background */}
       <div className="absolute inset-0">
         <img
-          src="/media/tourist_places/jubbah_petroglyphs.jpg"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/ISS-64_Jubba_with_Nefud_Desert%2C_Saudi_Arabia.jpg/1280px-ISS-64_Jubba_with_Nefud_Desert%2C_Saudi_Arabia.jpg"
           alt={ar ? "نقوش جبيل — تراث حائل" : "Jubbah Petroglyphs — Hail heritage"}
           className="w-full h-full object-cover"
         />

@@ -30,6 +30,7 @@ interface TourismContextValue {
   reviews: UIReview[];
   loading: boolean;
   error: string | null;
+  demoMode: boolean;
   user: { username: string } | null;
   refresh: () => Promise<void>;
   login: (username: string, password: string) => Promise<void>;
@@ -48,8 +49,19 @@ export function TourismProvider({ children, lang }: { children: ReactNode; lang?
   const [reviews, setReviews] = useState<UIReview[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [demoMode, setDemoMode] = useState(false);
   const [user, setUser] = useState<{ username: string } | null>(null);
   const ar = lang === 'ar';
+
+  const applyDemo = useCallback(() => {
+    const demo = getDemoFallback();
+    setAttractions(demo.attractions);
+    setEvents(demo.events);
+    setRoutes(demo.routes);
+    setReviews(demo.reviews);
+    setDemoMode(true);
+    setError(null);
+  }, []);
 
   const loadData = useCallback(async () => {
     setLoading(true);
@@ -62,21 +74,22 @@ export function TourismProvider({ children, lang }: { children: ReactNode; lang?
         getReviews(),
       ]);
 
+      if (!placesData.length) {
+        applyDemo();
+        return;
+      }
+
       setAttractions(placesData.map(mapPlace));
       setEvents(eventsData.map(mapEvent));
       setRoutes(routesData.map(mapRoute));
       setReviews(reviewsData.map((r) => mapReview(r, ar)));
+      setDemoMode(false);
     } catch {
-      const demo = getDemoFallback();
-      setAttractions(demo.attractions);
-      setEvents(demo.events);
-      setRoutes(demo.routes);
-      setReviews(demo.reviews);
-      setError(null);
+      applyDemo();
     } finally {
       setLoading(false);
     }
-  }, [ar]);
+  }, [ar, applyDemo]);
 
   useEffect(() => {
     initCsrf()
@@ -136,6 +149,7 @@ export function TourismProvider({ children, lang }: { children: ReactNode; lang?
       reviews,
       loading,
       error,
+      demoMode,
       user,
       refresh: loadData,
       login,
@@ -151,6 +165,7 @@ export function TourismProvider({ children, lang }: { children: ReactNode; lang?
       reviews,
       loading,
       error,
+      demoMode,
       user,
       loadData,
       login,
