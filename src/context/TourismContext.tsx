@@ -11,6 +11,7 @@ import { initCsrf, getMe, login as apiLogin, logout as apiLogout } from '@/api/a
 import { getEvents } from '@/api/events';
 import { toggleFavorite as apiToggleFavorite } from '@/api/favorites';
 import { createReview, getReviews, getPlaces, getRoutes } from '@/api/tourism';
+import { getDemoFallback } from '@/data/demo-fallback';
 import {
   mapEvent,
   mapPlace,
@@ -65,8 +66,13 @@ export function TourismProvider({ children, lang }: { children: ReactNode; lang?
       setEvents(eventsData.map(mapEvent));
       setRoutes(routesData.map(mapRoute));
       setReviews(reviewsData.map((r) => mapReview(r, ar)));
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load data');
+    } catch {
+      const demo = getDemoFallback();
+      setAttractions(demo.attractions);
+      setEvents(demo.events);
+      setRoutes(demo.routes);
+      setReviews(demo.reviews);
+      setError(null);
     } finally {
       setLoading(false);
     }

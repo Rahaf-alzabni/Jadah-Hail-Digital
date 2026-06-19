@@ -13,20 +13,29 @@ const PLACEHOLDER_IMAGES: Record<string, string> = {
   default: 'https://images.unsplash.com/photo-1778533643586-055aef2ffbc2?w=800&h=500&fit=crop&auto=format',
 };
 
-/** Local verified Hail images (served via /media after import_hail_images) */
+/** Hail landmark images — Wikimedia works on static hosting; /media used when API is live */
 export const HAIL_PLACE_IMAGES: Record<string, string> = {
-  'Jubbah Petroglyphs': '/media/tourist_places/jubbah_petroglyphs.jpg',
-  'Qasr Zaabal': '/media/tourist_places/qasr_zaabal.jpg',
-  'Aja Mountain': '/media/tourist_places/aja_mountain.jpg',
-  'Harrat Khaybar': '/media/tourist_places/harrat_khaybar.jpg',
-  'Al-Qishlah Palace': '/media/tourist_places/al_qishlah_palace.jpg',
-  'Salma Mountain': '/media/tourist_places/salma_mountain.jpg',
+  'Jubbah Petroglyphs':
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/ISS-64_Jubba_with_Nefud_Desert%2C_Saudi_Arabia.jpg/1280px-ISS-64_Jubba_with_Nefud_Desert%2C_Saudi_Arabia.jpg',
+  'Qasr Zaabal':
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Hail_City%2C_Saudi_Arabia.jpg/1280px-Hail_City%2C_Saudi_Arabia.jpg',
+  'Aja Mountain':
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Hail_Saudi_Arabia_Mountains.jpg/1280px-Hail_Saudi_Arabia_Mountains.jpg',
+  'Harrat Khaybar':
+    'https://upload.wikimedia.org/wikipedia/commons/4/4c/%D8%AD%D8%B1%D8%A9_%D8%AE%D9%8A%D8%A8%D8%B1.jpg',
+  'Al-Qishlah Palace':
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Qishlah_2.jpg/1280px-Qishlah_2.jpg',
+  'Salma Mountain':
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Hail_Saudi_Arabia_Mountains.jpg/1280px-Hail_Saudi_Arabia_Mountains.jpg',
 };
 
 export const HAIL_EVENT_IMAGES: Record<string, string> = {
-  'Hail International Camel Race': '/media/events/hail_international_camel_race.jpg',
-  'Hail Heritage Festival': '/media/events/hail_heritage_festival.jpg',
-  'Desert Rose Season': '/media/events/desert_rose_season.jpg',
+  'Hail International Camel Race':
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Camel_racing_%28Saudi_Arabia%29.jpg/1280px-Camel_racing_%28Saudi_Arabia%29.jpg',
+  'Hail Heritage Festival':
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Qishlah_2.jpg/1280px-Qishlah_2.jpg',
+  'Desert Rose Season':
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Hail_Saudi_Arabia_Mountains.jpg/1280px-Hail_Saudi_Arabia_Mountains.jpg',
 };
 
 export const CATEGORY_META: Record<string, { en: string; ar: string; icon: string; apiKey: string }> = {
