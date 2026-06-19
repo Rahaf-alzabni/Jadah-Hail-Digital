@@ -9,7 +9,7 @@ echo "==> Installing Node dependencies"
 npm ci
 
 echo "==> Building React frontend"
-npm run build
+VITE_BASE_PATH=/ npm run build
 
 echo "==> Running Django migrations"
 python manage.py migrate --noinput
@@ -19,7 +19,12 @@ python manage.py load_demo_data || true
 python manage.py sync_arabic_content || true
 python manage.py load_assistant_data || true
 
-echo "==> Downloading Hail landmark images (optional)"
+echo "==> Copying bundled images to media"
+mkdir -p media/tourist_places media/events
+cp -f public/images/places/* media/tourist_places/ 2>/dev/null || true
+cp -f public/images/events/* media/events/ 2>/dev/null || true
+
+echo "==> Attaching Hail landmark images"
 python manage.py import_hail_images || true
 
 echo "==> Collecting static files"

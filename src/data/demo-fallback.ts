@@ -1,20 +1,9 @@
 import type { Event, TouristPlace, TouristRoute } from '@/api/types';
 import { mapEvent, mapPlace, mapRoute, type UIReview } from '@/lib/mappers';
+import { STATIC_EVENT_IMAGES, STATIC_PLACE_IMAGES } from '@/lib/static-images';
 
-/** Wikimedia URLs — work on static GitHub Pages without a backend */
-const IMAGES = {
-  jubbah:
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/ISS-64_Jubba_with_Nefud_Desert%2C_Saudi_Arabia.jpg/1280px-ISS-64_Jubba_with_Nefud_Desert%2C_Saudi_Arabia.jpg',
-  zaabal:
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Hail_City%2C_Saudi_Arabia.jpg/1280px-Hail_City%2C_Saudi_Arabia.jpg',
-  aja:
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Hail_Saudi_Arabia_Mountains.jpg/1280px-Hail_Saudi_Arabia_Mountains.jpg',
-  khaybar: 'https://upload.wikimedia.org/wikipedia/commons/4/4c/%D8%AD%D8%B1%D8%A9_%D8%AE%D9%8A%D8%A8%D8%B1.jpg',
-  qishlah:
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Qishlah_2.jpg/1280px-Qishlah_2.jpg',
-  camel:
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Camel_racing_%28Saudi_Arabia%29.jpg/1280px-Camel_racing_%28Saudi_Arabia%29.jpg',
-} as const;
+const IMAGES = STATIC_PLACE_IMAGES;
+const EVENT_IMAGES = STATIC_EVENT_IMAGES;
 
 function daysFromNow(days: number): string {
   const d = new Date();
@@ -30,7 +19,7 @@ const DEMO_PLACES: TouristPlace[] = [
     description: 'UNESCO World Heritage site at Jubbah featuring rock art dating back 10,000 years.',
     description_ar: 'موقع تراث عالمي لليونسكو في جبّة يضم نقوشاً صخرية يعود تاريخها إلى عشرة آلاف سنة.',
     category: 'historical',
-    image: IMAGES.jubbah,
+    image: IMAGES['Jubbah Petroglyphs'],
     latitude: 28.03,
     longitude: 40.92,
     visiting_hours: '7:00 – 19:00',
@@ -47,7 +36,7 @@ const DEMO_PLACES: TouristPlace[] = [
     description: 'Ancient fortress perched atop a volcanic rock formation rising above Hail city.',
     description_ar: 'قلعة أثرية على قمة صخرية بركانية تطل على مدينة حائل.',
     category: 'historical',
-    image: IMAGES.zaabal,
+    image: IMAGES['Qasr Zaabal'],
     latitude: 27.54,
     longitude: 41.71,
     visiting_hours: '8:00 – 18:00',
@@ -64,7 +53,7 @@ const DEMO_PLACES: TouristPlace[] = [
     description: 'Iconic granite massif within Hail city with hiking trails and panoramic views.',
     description_ar: 'كتلة جرانيتية شهيرة داخل مدينة حائل مع مسارات مشي وإطلالات بانورامية.',
     category: 'natural',
-    image: IMAGES.aja,
+    image: IMAGES['Aja Mountain'],
     latitude: 27.56,
     longitude: 41.62,
     visiting_hours: 'Open 24h',
@@ -81,7 +70,7 @@ const DEMO_PLACES: TouristPlace[] = [
     description: 'One of the largest volcanic fields with dramatic basalt lava flows.',
     description_ar: 'من أكبر الحقول البركانية مع تدفقات بازلتية مذهلة.',
     category: 'natural',
-    image: IMAGES.khaybar,
+    image: IMAGES['Harrat Khaybar'],
     latitude: 25.7,
     longitude: 39.9,
     visiting_hours: 'Daylight only',
@@ -98,7 +87,7 @@ const DEMO_PLACES: TouristPlace[] = [
     description: 'Regional heritage museum housing traditional Hail artifacts and manuscripts.',
     description_ar: 'متحف تراثي يضم مقتنيات حائل التقليدية والمخطوطات.',
     category: 'cultural',
-    image: IMAGES.qishlah,
+    image: IMAGES['Al-Qishlah Palace'],
     latitude: 27.51,
     longitude: 41.68,
     visiting_hours: '9:00 – 17:00',
@@ -115,7 +104,7 @@ const DEMO_PLACES: TouristPlace[] = [
     description: 'Sister peak to Aja Mountain with granite ridges and desert panoramas.',
     description_ar: 'قمة شقيقة لجبل أجا بسلاسل جرانيتية وإطلالات صحراوية.',
     category: 'natural',
-    image: IMAGES.aja,
+    image: IMAGES['Salma Mountain'],
     latitude: 27.6,
     longitude: 41.5,
     visiting_hours: 'Open 24h',
@@ -134,7 +123,7 @@ const DEMO_EVENTS: Event[] = [
     title_en: 'Hail International Camel Race',
     description: 'Annual camel racing festival attracting visitors from across the region.',
     description_ar: 'مهرجان سنوي لسباقات الهجن يجذب زواراً من مختلف المناطق.',
-    image: IMAGES.camel,
+    image: EVENT_IMAGES['Hail International Camel Race'],
     location: 'Camel Racing Track, Hail',
     location_ar: 'ميدان سباق الهجن، حائل',
     start_date: daysFromNow(14),
@@ -147,8 +136,7 @@ const DEMO_EVENTS: Event[] = [
     title_en: 'Hail Heritage Festival',
     description: 'Celebration of Hail heritage with crafts, music, and traditional food.',
     description_ar: 'احتفاء بتراث حائل مع الحرف والموسيقى والأطعمة التقليدية.',
-    image: IMAGES.qishlah,
-    location: 'Al-Qishlah Palace',
+    image: EVENT_IMAGES['Hail Heritage Festival'],
     location_ar: 'قصر القشلة',
     start_date: daysFromNow(35),
     end_date: daysFromNow(45),
@@ -160,8 +148,7 @@ const DEMO_EVENTS: Event[] = [
     title_en: 'Desert Rose Season',
     description: 'Spring cultural season at Aja Mountain with outdoor activities.',
     description_ar: 'موسم ثقافي ربيعي عند جبل أجا مع أنشطة في الهواء الطلق.',
-    image: IMAGES.aja,
-    location: 'Aja Mountain',
+    image: EVENT_IMAGES['Desert Rose Season'],
     location_ar: 'جبل أجا',
     start_date: daysFromNow(60),
     end_date: daysFromNow(70),

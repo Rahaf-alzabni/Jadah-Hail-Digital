@@ -1,11 +1,11 @@
-# Backend API for GitHub Pages frontend
-# Deploy on Render.com (free) — connect repo Rahaf-alzabni/Jadah-Hail-Digital
+# Full-stack deploy: Django API + React UI on one URL
+# https://dashboard.render.com → New Blueprint → connect Rahaf-alzabni/Jadah-Hail-Digital
 services:
   - type: web
-    name: jadah-hail-api
+    name: jadah-hail
     runtime: python
     plan: free
-    buildCommand: pip install -r requirements.txt && python manage.py migrate --noinput && python manage.py load_demo_data && python manage.py sync_arabic_content && python manage.py load_assistant_data && python manage.py import_hail_images || true
+    buildCommand: chmod +x build.sh && ./build.sh
     startCommand: gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
     envVars:
       - key: PYTHON_VERSION
@@ -16,7 +16,3 @@ services:
         generateValue: true
       - key: ALLOWED_HOSTS
         value: ".onrender.com"
-      - key: CORS_ALLOWED_ORIGINS
-        value: "https://rahaf-alzabni.github.io"
-      - key: CSRF_TRUSTED_ORIGINS
-        value: "https://rahaf-alzabni.github.io"
